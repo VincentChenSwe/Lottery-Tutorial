@@ -1,15 +1,18 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const airnodeProtocol = require("@api3/airnode-protocol")
 
 describe("Lottery", function () {
-  let lotteryContract, accounts, nextWeek;
-  
+  let lotteryContract, accounts, nextWeek, chainId;
+
   describe("Deployment", function () {
     it("Deploys", async function () {
+      let { chainId } = await ethers.provider.getNetwork();
+      const rrpAddress = airnodeProtocol.AirnodeRrpAddresses[chainId];
       const Lottery = await ethers.getContractFactory("Lottery");
       accounts = await ethers.getSigners();
       nextWeek = Math.floor(Date.now() / 1000) + 604800;
-      lotteryContract = await Lottery.deploy(nextWeek);
+      lotteryContract = await Lottery.deploy(nextWeek, rrpAddress);
       expect(await lotteryContract.deployed()).to.be.ok;
     });
 
