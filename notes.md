@@ -25,3 +25,24 @@
    4. test
 6. Rewrite tests
    1. Install and import @api3/airnode-admin
+   2. write set sponsorwallet test
+   3. derive sponsor wallet using airnode admin
+   4. pass into set sponsor function
+7. Write get winning number functions
+   1. require lottery ended
+   2. require sponsor wallet top up
+   3. make request full request and store request id
+   4. pay sponsor wallet
+8. rewrite closeweek function
+   1. handle requestIds
+   2. decode random number
+   3. add onlyAirnodeRrp
+9. Rewrite tests
+   1.  user enters 1-65535
+10. nvm should be scripts
+11. nvm should be hardhat-deploy
+    1.  install hardhat-deploy
+        1.  add require('hardhat-deploy'); to config
+    2.  make deploy folder
+    3.  make file 1_deploy.js
+    4.  make 2_set_sponsorwallet.js
