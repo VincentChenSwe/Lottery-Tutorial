@@ -46,3 +46,11 @@
     2.  make deploy folder
     3.  make file 1_deploy.js
     4.  make 2_set_sponsorwallet.js
+    5.  start hardhat node
+    6.  deploy
+12. Make enter script
+
+
+
+
+Dont repeat comments

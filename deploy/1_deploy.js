@@ -1,6 +1,5 @@
 const hre = require('hardhat');
 const airnodeProtocol = require('@api3/airnode-protocol');
-const airnodeAdmin = require("@api3/airnode-admin");
 
 module.exports = async () => {
   // We are getting the AirnodeRrp address from @api3/airnode-protocol

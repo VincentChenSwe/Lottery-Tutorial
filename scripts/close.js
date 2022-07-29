@@ -7,15 +7,18 @@
 const hre = require("hardhat");
 
 async function main() {
-    const guess = 55;
-
     const Lottery = await hre.deployments.get('Lottery');
     const lotteryContract = new hre.ethers.Contract(Lottery.address, Lottery.abi, (await hre.ethers.getSigners())[0]);
-    const ticketPrice = await lotteryContract.ticketPrice();
-    const tx = await lotteryContract.enter(guess, { value: ticketPrice });
-    await tx.wait();
-    const entries = await lotteryContract.getEntriesForNumber(guess, 1);
-    console.log(`Guesses for ${guess}: ${entries}`);
+    const receipt = await lotteryContract.getWinningNumber({ value: ethers.utils.parseEther("0.01") });
+    // and read the logs once it gets confirmed to get the request ID
+    const requestId = await new Promise((resolve) =>
+        ethers.provider.once(receipt.hash, (tx) => {
+            // We want the log from QrngExample, not AirnodeRrp
+            const log = tx.logs.find((log) => log.address === lotteryContract.address);
+            const parsedLog = lotteryContract.interface.parseLog(log);
+            resolve(parsedLog.args.requestId);
+        })
+    );
 }
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
