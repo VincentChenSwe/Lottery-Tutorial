@@ -49,6 +49,7 @@
     5.  start hardhat node
     6.  deploy
 12. Make enter script
+    1.  
 
 
 
