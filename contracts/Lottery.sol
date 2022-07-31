@@ -14,13 +14,13 @@ contract Lottery is RrpRequesterV0, Ownable {
     uint256 public ticketPrice = 0.0001 ether; // price of a single ticket
     uint256 public week = 1; // current week counter
     uint256 public endTime; // datetime that current week ends and lottery is closable
-    uint256 public constant MAX_NUMBER = 65535; // highest possible number returned by QRNG
+    uint256 public constant MAX_NUMBER = 10000; // highest possible number returned by QRNG
 
     // Airnode Variables
     address public constant airnodeAddress =
         0x9d3C147cA16DB954873A498e0af5852AB39139f2;
     bytes32 public constant endpointId =
-        0xf2c5caa3575e07b81b1d51410953dd083522c06495437acd83255a87647865c7;
+        0xfb6d017bb87991b7495f563db3c8cf59ff87b09781947bb1e417006ad7f55a78;
     address public sponsorWallet;
 
     // Mappings
@@ -77,9 +77,9 @@ contract Lottery is RrpRequesterV0, Ownable {
         require(pendingRequestIds[requestId], "No such request made");
         delete pendingRequestIds[requestId];
 
-        require(block.timestamp > endTime, "Lottery is open"); // will prevent duplicate closings. If someone closed it first it will increment the end time and not allow
+        // require(block.timestamp > endTime, "Lottery is open"); // will prevent duplicate closings. If someone closed it first it will increment the end time and not allow
 
-        uint256 _randomNumber = abi.decode(data, (uint256));
+        uint256 _randomNumber = abi.decode(data, (uint256)) % MAX_NUMBER; // get the random number from the data
         emit ReceivedRandomNumber(requestId, _randomNumber);
 
         winningNumber[week] = _randomNumber;
@@ -87,12 +87,13 @@ contract Lottery is RrpRequesterV0, Ownable {
         week++; // increment week counter
         endTime += 7 days; // set end time for 7 days later
         if (winners.length > 0) {
+            ticketPrice = 0.0001 ether; // reset the ticket price
             uint256 earnings = pot / winners.length; // divide pot evenly among winners
             pot = 0; // reset pot
             for (uint256 i = 0; i < winners.length; i++) {
                 payable(winners[i]).transfer(earnings); // send earnings to each winner
             }
-        }
+        } else ticketPrice += ticketPrice; // Double the ticket price
     }
 
     /// @notice Read only function to get addresses entered into a specific number for a specific week

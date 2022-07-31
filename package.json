@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "deploy": "hardhat deploy --network localhost"
+    "deploy": "hardhat deploy --network localhost",
+    "test-deployed": "hardhat test --network ropsten ./test/Deployed.js"
   },
   "keywords": [],
   "author": "",
