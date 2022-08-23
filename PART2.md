@@ -40,7 +40,7 @@ We can tell git to ignore the `.env` file by adding the following to a `.gitigno
 .env
 ```
 
-#### 2. Configure Hardhat to use forking
+#### 2. [Configure](https://hardhat.org/hardhat-runner/docs/config) Hardhat to use forking
 
 By adding the following to our `module.exports` in the `hardhat.config.js` file, we tell Hardhat to make a copy of the [Goerli network](https://ethereum.org/en/developers/docs/networks/#goerli) for use in local testing:
 
@@ -305,7 +305,7 @@ const hre = require("hardhat"); // Instance of Hardhat Runtime Environment
 const airnodeProtocol = require("@api3/airnode-protocol");
 ```
 
-Hardhat deploy scripts should be done through a `module.exports` function **Need more info**. We will use the Airnode Protocol package to retrieve the RRP Contract address needed as an argument to deploy our lottery contract. We'll use `hre.getChainId()`, a function included in Hardhat-Deploy, to get the chain ID, which we'd set to 5 in `hardhat.config.js`.
+Hardhat deploy scripts should be done through a `module.exports` function to package and export the code for reuse when Hardhat is run. We will use the Airnode Protocol package to retrieve the RRP Contract address needed as an argument to deploy our lottery contract. We'll use `hre.getChainId()`, a function included in Hardhat-Deploy, to get the chain ID, which we'd set to 5 in `hardhat.config.js`.
 
 Finally, we'll deploy the contract using `hre.deployments`. We pass in our arguments, a "from" address, and set logging to true.
 
