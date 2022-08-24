@@ -42,7 +42,7 @@ Run the test command to see the boilerplate contract in action.
 npx hardhat test
 ```
 
-When we run `npx hardhat test`, hardhat tests the contracts on a local Ethereum node. This makes it fast and free to execute our contracts.
+When we run `npx hardhat test`, Hardhat tests the contracts on a local Ethereum node. This makes it fast and free to execute our contracts.
 
 
 
